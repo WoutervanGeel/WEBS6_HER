@@ -1,73 +1,96 @@
 module.exports = function ($rootScope, $window, $state) {
     var service = {};
-    var _local = {
-        landingRoute: 'landing',
+    //data nodig voor navigatie
+    var _data = {
+        local_url: 'http://localhost:3000/%23/',
+        api_url: 'http://mahjongmayhem.herokuapp.com/auth/avans',
+        landingRoute: 'landing'
+    }
+    //data van de ingelogde user
+    var _localUser = {
         token: null,
         username: null,
     };
 
-    service.setCredentials = function (username, token) {
+    //setter van _localUser waardes
+    service.setLocalUserValues = function (username, token) {
+        //opslaan van de waardes
         $rootScope.username = username;
         $rootScope.token = token;
-        $rootScope.loggedin = true;
+        $rootScope.loggedIn = true;
 
         localStorage.setItem('username', username);
         localStorage.setItem('token', token);
-        _local.username = username;
-        _local.token = token;
+        
+        _localUser.username = username;
+        _localUser.token = token;
 
-        // go to dashboard
+        // verwijzen naar dashboard
          $state.go('app.dashboard');
     };
 
-     service.goToDashboard = function () {
-        $state.go('app.dashboard');
-    };
-
-    service.goToLogin = function () {
-        console.log("go to API login");
-        $window.location.href = "http://mahjongmayhem.herokuapp.com/auth/avans?callbackUrl=http://localhost:3000/%23/landing";
-    };
-
+    //getter van _localUser token
     service.getToken = function () {
         if (service.isLoggedIn()) {
-            return _local.token;
+            //is ingelogd
+            return _localUser.token;
         }
     };
+    
+    //getter van _localUser username
     service.getUsername = function () {
         if (service.isLoggedIn()) {
-            return _local.username;
+            // is ingelogd
+            return _localUser.username;
         }
+    };
+    
+    //controle of ingelogd
+    service.isLoggedIn = function () {
+        return _localUser.token !== null;
+    };
+    
+    //starten van externe login
+    service.goToExternalLogin = function () {
+        $window.location.href = _data.api_url + "?callbackUrl=" + _data.local_url + _data.landingRoute;
     };
 
+    //uitloggen
     service.logOut = function () {
+        //verwijderen van username en token
         $rootScope.username = null;
         $rootScope.token = null;
-        $rootScope.loggedin = false;
-        _local.token = null;
+        $rootScope.loggedIn = false;
+        
+        _localUser.token = null;
+        
         localStorage.clear();
-        $state.go(_local.landingRoute);
+        
+        //verwijzen naar de landingpage
+        $state.go(_data.landingRoute);
     };
+    
+    //route controle om te controleren of de gebruiker wel de pagina mag bezoeken
     service.authHandler = function (event, next) {
-        if (next.name != _local.landingRoute && !service.isLoggedIn()) {
-            console.log("no match");
+        // kijken of niet ingelogd en route is anders dan landingpage
+        if (next.name != _data.landingRoute && !service.isLoggedIn()) {
+            // route is anders dan de landingpage en user niet ingelogd
             event.preventDefault();
-            $state.go(_local.landingRoute);
+            
+            //verwijzen naar landingpage
+            $state.go(_data.landingRoute);
         }
     };
-    service.isLoggedIn = function () {
-        console.log('is logged in', _local.token !== null);
-        return _local.token !== null;
-    };
-    /**
-         * On Initialization, prepare the previously stored data for use
-         */
+    
+    // Bij het initialiseren ophalen van al bekende informatie van de gebruiker
     (function PrepareAuthentication() {
-        // FIRST VERIFY THE STATE OF THE CLIENT | LOGGED IN OR NOT LOGGED IN ?
-        if (localStorage.getItem('token') != null) { // Check if the user is logged or not
-            _local.token = localStorage.getItem("token");
-            _local.username = localStorage.getItem("username");
-            $rootScope.username = _local.username;
+        if (localStorage.getItem('token') != null) {
+            //ingelogd
+            
+            //vullen van lokale waardes
+            _localUser.token = localStorage.getItem("token");
+            _localUser.username = localStorage.getItem("username");
+            $rootScope.username = _localUser.username;
         }
     })();
 

@@ -1,4 +1,4 @@
-module.exports = function ($scope, AuthenticationService, DashBoardService, $mdToast, $mdDialog, $window) {
+module.exports = function ($scope, AuthenticationService, DashBoardService, $mdToast, $mdDialog, $window, $state) {
     this.self = this;
 
     this.self.minPlayers = 1;
@@ -11,7 +11,7 @@ module.exports = function ($scope, AuthenticationService, DashBoardService, $mdT
     }
 
     this.self.goToLogin = function () {
-        AuthenticationService.goToLogin();
+        AuthenticationService.goToExternalLogin();
     };
 
     this.self.logOut = function () {
@@ -20,7 +20,7 @@ module.exports = function ($scope, AuthenticationService, DashBoardService, $mdT
     };
 
     this.self.goToDashboard = function () {
-        AuthenticationService.goToDashboard();
+        $state.go('app.dashboard');
     };
 
     this.self.showAddGame = function () {

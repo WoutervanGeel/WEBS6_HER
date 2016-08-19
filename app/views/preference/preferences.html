@@ -5,9 +5,9 @@
             <md-input-container>
                 <label>Theme</label>
                 <md-select ng-model="Theme.theme" required>
-                    <md-option ng-repeat="theme in PrefC.themes" ng-value="theme">{{theme}}</md-option>
+                    <md-option ng-repeat="theme in preferencesC.themes" ng-value="theme">{{theme}}</md-option>
                 </md-select>
-                <md-button class="md-raised md-primary" ng-click="PrefC.changeTheme(Theme.theme) ">Change theme</md-button>
+                <md-button class="md-raised md-primary" ng-click="preferencesC.changeTheme(Theme.theme) ">Change theme</md-button>
             </md-input-container>
 
         </div>
@@ -15,9 +15,9 @@
             <md-input-container>
                 <label>Tiles</label>
                 <md-select ng-model="Theme.blockTheme " required>
-                    <md-option ng-repeat="theme in PrefC.blockThemes " ng-value="theme">{{theme}}</md-option>
+                    <md-option ng-repeat="theme in preferencesC.blockThemes " ng-value="theme">{{theme}}</md-option>
                 </md-select>
-                <md-button class="md-raised md-primary" ng-click="PrefC.changeBlockTheme(Theme.blockTheme)">Change tiles theme</md-button>
+                <md-button class="md-raised md-primary" ng-click="preferencesC.changeBlockTheme(Theme.blockTheme)">Change tiles theme</md-button>
             </md-input-container>
         </div>
 </md-content>

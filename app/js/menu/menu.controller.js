@@ -38,6 +38,11 @@ module.exports = function ($scope, AuthenticationService, DashBoardService, $mdT
         });
     };
     
+    //stoppen van popup voor het maken van een game
+    self.closeAddGamePopup = function () {
+        $mdDialog.hide();
+    }
+    
     //popup starten om preferences aan te passen
     self.goToPreferences = function () {
         $mdDialog.show({
@@ -46,11 +51,6 @@ module.exports = function ($scope, AuthenticationService, DashBoardService, $mdT
             parent: angular.element(document.body),
             clickOutsideToClose: true
         });
-    }
-    
-    //stoppen van popup voor het maken van een game
-    self.closeAddGamePopup = function () {
-        $mdDialog.hide();
     }
     
     // game aanmaken

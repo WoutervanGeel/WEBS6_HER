@@ -1,0 +1,33 @@
+<md-content md-theme="{{Theme}}" md-theme-watch layout-gt-sm="row" layout-padding>
+    <div>
+        <form name="game">
+            Game aanmaken:
+            <div class="row">
+                <md-input-container class="md-block">
+                    <label>Template</label>
+                    <md-select ng-model="game.template" required>
+                        <md-option ng-repeat="template in MenuC.gameTemplates" ng-value="template">{{template}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div class="row">
+                <md-input-container class="md-block">
+                    <label>Minimale aantal spelers</label>
+                    <md-select ng-model="game.minPlayers" required>
+                        <md-option ng-repeat="minPlayers in MenuC.players" ng-value="{{minPlayers}}">{{minPlayers}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div class="row">
+                <md-input-container class="md-block">
+                    <label>Maximale aantal spelers</label>
+                    <md-select ng-model="game.maxPlayers" required>
+                        <md-option ng-repeat="maxPlayers in MenuC.players" ng-value="{{maxPlayers}}">{{maxPlayers}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <md-button class="md-primary md-raised" ng-click="MenuC.addGame(game)">Aanmaken</md-button>
+            <md-button class="md-raised" ng-click="MenuC.closeAddGame()">Cancel</md-button>
+        </form>
+    </div>
+</md-content>

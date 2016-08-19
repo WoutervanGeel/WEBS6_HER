@@ -1,0 +1,109 @@
+$file_path: "../img/Mahjong_sprite_sheet_2.png";
+$custom_right: 0;
+$custom_down: 0;
+$circles: 9;
+$bamboos: 9;
+$characters: 9;
+$winds: North East South West;
+$dragons: Green Red White;
+$flowers: Plum Chrysantememum Orchid Bamboo;
+$seasons: Spring Summer Autumn Winter;
+$tilesuits: Bamboo Circle Character Dragon Wind Season Flower;
+$tile_height: 90;
+$tile_width: 73;
+
+.tile{
+	// -webkit-transform: scale(1.1)  skew(-20deg, 10deg);
+	// -moz-transform:  scale(1.1) skew(-20deg, 10deg);
+	// -o-transform:  scale(1.1) skew(-20deg, 10deg);
+	// -ms-transform:  scale(1.1) skew(-20deg, 10deg);
+	transform:  scale(1) skew(10deg,0deg);
+	box-shadow: 0px 0px 5px #2a2a2a;
+	// -webkit-border-radius: 10px;
+	// -moz-border-radius: 10px;
+	// border-radius: 20px;
+    position: absolute;
+    height: $tile_height + px;
+    width: $tile_width + px;
+}
+.tile:hover{
+	border:  3px solid rgba(255, 0, 0, .8);
+}
+.selected{
+	border: 3px solid black;
+}
+
+@each $suit in $tilesuits{
+	@if $suit == Bamboo{
+		@for $i from 1 through $bamboos{
+			.#{$suit+"-"+$i}{
+				@extend .tile;
+				$custom_right: ($i - 1)* $tile_width;
+				background: #{'url('+$file_path+') -'+$custom_right+'px -'+$tile_height+'px'};
+			}
+		}
+	}
+	@if $suit == Circle{
+		@for $i from 1 through $circles{
+			.#{$suit+"-"+$i}{
+				@extend .tile;
+				$custom_right: ($i - 1)*$tile_width;
+				background: #{'url('+$file_path+') -'+$custom_right+'px -'+$tile_height * 2+'px'};
+			}
+		}
+	}
+	@if $suit == Character{
+		@for $i from 1 through $characters{
+			.#{$suit+"-"+$i}{
+				@extend .tile;
+				$custom_right: ($i - 1)*$tile_width;
+				background: #{'url('+$file_path+') -'+$custom_right+'px 0px'};
+			}
+		}
+	}
+	@if $suit == Dragon{
+		$custom_down: 0;
+		@each $dragon in $dragons{
+			.#{$suit+"-"+$dragon}{
+				@extend .tile;
+				$custom_right: ($tile_width * 13);
+				background: #{'url('+$file_path+') -'+$custom_right+'px -'+$custom_down+'px'};
+			}
+			$custom_down:($custom_down+$tile_height);
+		}
+	}
+	@if $suit == Wind{
+		$custom_right: ($tile_width * $circles);
+		@each $wind in $winds{
+			.#{$suit+"-"+$wind}{
+				@extend .tile;
+					background: #{'url('+$file_path+') -'+$custom_right+'px 0px'};
+			}
+			$custom_right: ($custom_right+$tile_width);
+		}
+	}
+	@if $suit == Season{
+		$custom_right: ($tile_width * $bamboos);
+		@each $season in $seasons{
+			.#{$suit+"-"+$season}{
+				@extend .tile;
+				$custom_down: $tile_height;
+					background: #{'url('+$file_path+') -'+$custom_right+'px -'+$custom_down+'px'};
+			}
+			$custom_right: ($custom_right + $tile_width);
+		}
+	}
+	@if $suit == Flower{
+		$custom_right: ($tile_width * $circles);
+		@each $flower in $flowers{
+			.#{$suit+"-"+$flower}{
+				@extend .tile;
+				$custom_down: ($tile_height * 2);
+				background: #{'url('+$file_path+') -'+$custom_right+'px -'+$custom_down+'px'};
+			}
+			// for each flower tile increase te pixels to right with its own width;
+			$custom_right: ($custom_right + $tile_width);
+		}
+	}
+	
+}

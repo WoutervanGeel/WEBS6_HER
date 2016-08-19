@@ -1,0 +1,24 @@
+<md-toolbar class="md-hue-2 md-whiteframe-z3">
+    <div class="md-toolbar-tools">
+        <md-button class="md-primary" ng-click="MenuC.showAddGame()" ng-if="!playing">
+            <md-icon><i class="material-icons">add_circle_outline</i></md-icon>
+            Game toevoegen
+        </md-button>
+        <md-button class="md-primary" ng-click="MenuC.goToDashboard()" ng-if="playing">
+            <md-icon><i class="material-icons">home</i></md-icon>
+            Dashboard
+        </md-button>
+        <span flex></span>
+        <div class="nav-buttons">
+            <md-button class="md-primary" ng-click="MenuC.goToPref()">
+                <md-icon><i class="material-icons">account_circle</i></md-icon>
+            </md-button>
+            {{username}}
+            <md-button class="md-accent md-hue-2 md-raised" ng-click="MenuC.logOut()">Uitloggen</md-button>
+        </div>
+    </div>
+</md-toolbar>
+<!-- This is for showing the content next under the menu bar, it is loaded dynamically -->
+<md-content layout-padding>
+    <div ui-view name="menuContent" flex></div>
+</md-content>

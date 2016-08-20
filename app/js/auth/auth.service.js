@@ -81,7 +81,7 @@ module.exports = function ($rootScope, $window, $state) {
             $state.go(_data.landingRoute);
         }
     };
-    
+
     // Bij het initialiseren ophalen van al bekende informatie van de gebruiker
     (function PrepareAuthentication() {
         if (localStorage.getItem('token') != null) {

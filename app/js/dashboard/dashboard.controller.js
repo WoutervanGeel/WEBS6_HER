@@ -72,7 +72,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         DashBoardService.getGames(self.total, self.query.page, function (result) {
             if (result.statusText == 'OK') {
                 self.games = result.data;
-                console.log(self.games);
             }
             else {
                 $mdToast.show($mdToast.simple().textContent(result.data.message));

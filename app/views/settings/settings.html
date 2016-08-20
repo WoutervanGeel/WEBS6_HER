@@ -1,0 +1,23 @@
+<md-content md-theme-watch layout-gt-sm="row" ng-if="true" layout-padding >
+    <form name="Theme">
+        <h4>Settings</h4>
+        <div class="row">
+            <md-input-container>
+                <label>Theme</label>
+                <md-select ng-model="settingsC.theme" required>
+                    <md-option ng-repeat="theme in settingsC.themes" ng-value="theme">{{theme}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="row">
+            <md-input-container>
+                <label>Board</label>
+                <md-select ng-model="settingsC.boardTheme" required>
+                    <md-option ng-repeat="theme in settingsC.boardThemes " ng-value="theme">{{theme}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <md-button class="md-primary md-raised" ng-click="settingsC.saveSettings()">Save</md-button>
+        <md-button class="md-raised" ng-click="settingsC.closeDialog()">Cancel</md-button>
+    </form>
+</md-content>

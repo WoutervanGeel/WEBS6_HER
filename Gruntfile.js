@@ -26,8 +26,8 @@ module.exports = function (grunt) {
                     style: 'compressed'
                 },
                 files: {
-                    'dist/css/tilelist1.css': 'app/css/tilelist1.scss',
-                    'dist/css/tilelist2.css': 'app/css/tilelist2.scss'
+                    'dist/css/boardSet1.css': 'app/css/boardSet1.scss',
+                    'dist/css/boardSet2.css': 'app/css/boardSet2.scss'
                 }
             }
         },

@@ -46,8 +46,8 @@ module.exports = function ($scope, AuthenticationService, DashBoardService, $mdT
     //popup starten om preferences aan te passen
     self.goToPreferences = function () {
         $mdDialog.show({
-            templateUrl: 'views/preference/preferences.html',
-            controller: 'PreferenceController as preferencesC',
+            templateUrl: 'views/settings/settings.html',
+            controller: 'SettingsController as settingsC',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         });

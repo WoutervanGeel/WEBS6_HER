@@ -25,7 +25,10 @@ module.exports = function ($rootScope) {
     };
 
     service.preferenceHandler = function () {
-        $rootScope.BoardTheme = service.getBoardThemeSetting();
+        var result = document.getElementsByClassName("BoardStyle");
+        var wrappedResult = angular.element(result);
+        wrappedResult[0].setAttribute('href', "css/"+service.getBoardThemeSetting()+".css");
+
         $rootScope.Theme = service.getThemeSetting();
     };
 

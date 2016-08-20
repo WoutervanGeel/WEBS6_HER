@@ -2,8 +2,9 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     var self = this;
     self.games = {};
     self.game = {};
-    self.total;
+    self.total = 0;
     $rootScope.playing = false;
+    self.gameStateFilter = '';
 
     self.setGameStateFilter = function (gameState) {
         self.gameStateFilter = gameState;
@@ -58,13 +59,12 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.setGame = function (game) {
-        //Parse the whole JSON object
         self.game = game;
     };
+
     DashBoardService.gameStates(function (result) {
         if (result.statusText == 'OK') {
             self.total = result.data[0].count + result.data[1].count + result.data[2].count;
-            console.log(total);
         }
     });
 
@@ -80,7 +80,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.getGame = function (id) {
-        console.log(id);
         DashBoardService.getGame(id, function (result) {
             if (result.statusText == 'OK') {
                 console.log(result.data);
@@ -122,7 +121,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     self.playGame = function (gameId) {
         DashBoardService.getGame(gameId, function (result) {
-            console.log(result);
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent("Playing game!"));
                 $state.go('app.game', { id: gameId });
@@ -135,7 +133,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     self.spectateGame = function (gameId) {
         DashBoardService.getGame(gameId, function (result) {
-            console.log(result);
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent("Spectating game!"));
                 $state.go('app.game', { id: gameId });
@@ -147,13 +144,13 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.playerExists = function (game, username) {
-        for (i = 0; i < game.players.length; i++) {
-            if (game.players[i]._id == username) {
-                return true
-            }
+        for (var i = 0; i < game.players.length; i++) {
+            if (game.players[i]._id == username)
+                return true;
         }
+        return false;
     };
 
-    // Load data automatically when the user opens page
+    // ONLOAD
     self.getGames();
 };

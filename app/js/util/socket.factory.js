@@ -3,7 +3,6 @@ module.exports = function ($mdToast, $state) {
 
     service.connectGame = function (id) {
         var socket = io('http://mahjongmayhem.herokuapp.com?gameId=' + id);
-        console.log("Connected");
 
         socket.on('start', function () {
             $mdToast.show($mdToast.simple().textContent("Game started"));
@@ -16,7 +15,6 @@ module.exports = function ($mdToast, $state) {
                     $state.go('app.dashboard');
                 }
             });
-            // optie om naar dashboard te gaan?
         });
 
         socket.on('playerJoined', function (data) {

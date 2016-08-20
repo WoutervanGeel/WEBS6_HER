@@ -1,24 +1,28 @@
-<md-toolbar class="md-hue-2 md-whiteframe-z3">
+<md-toolbar class="md-hue-2">
     <div class="md-toolbar-tools">
-        <md-button class="md-primary" ng-click="MenuC.showAddGamePopup()" ng-if="!playing">
-            <md-icon><i class="material-icons">add_circle_outline</i></md-icon>
-            Game toevoegen
+
+        <span><strong>Welcome</strong> {{username}}</span>
+
+        <span flex></span>
+
+        <md-button class="md-raised" aria-label="New Game" ng-click="MenuC.showAddGamePopup()" ng-if="!playing">
+            New Game
         </md-button>
-        <md-button class="md-primary" ng-click="MenuC.goToDashboard()" ng-if="playing">
-            <md-icon><i class="material-icons">home</i></md-icon>
+        <md-button class="md-raised" aria-label="Dashboard" ng-click="MenuC.goToDashboard()" ng-if="playing">
             Dashboard
         </md-button>
-        <span flex></span>
-        <div class="nav-buttons">
-            <md-button class="md-primary" ng-click="MenuC.goToPreferences()">
-                <md-icon><i class="material-icons">account_circle</i></md-icon>
-            </md-button>
-            {{username}}
-            <md-button class="md-accent md-hue-2 md-raised" ng-click="MenuC.logOut()">Uitloggen</md-button>
-        </div>
+
+        <md-button class="material-icons md-icon-button" aria-label="Settings" ng-click="MenuC.goToPreferences()">
+            <icon class="material-icons">settings</icon>
+        </md-button>
+
+        <md-button class="material-icons md-icon-button" aria-label="Logout" ng-click="MenuC.logOut()">
+            <icon class="material-icons">power_settings_new</icon>
+        </md-button>
     </div>
 </md-toolbar>
-<!-- This is for showing the content next under the menu bar, it is loaded dynamically -->
-<md-content layout-padding>
+
+<!-- Show content toolbar -->
+<md-content class="md-padding">
     <div ui-view name="menuContent" flex></div>
 </md-content>

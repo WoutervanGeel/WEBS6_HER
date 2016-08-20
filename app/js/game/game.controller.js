@@ -2,10 +2,10 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
     var self = this;
     self.tiles = {};
     self.tempTile = undefined;
-    self.players = {}; // ik heb dit toegevoegd voor lijst met spelers
+    self.players = {};
     self.matchedTiles = {};
     $rootScope.playing = true;
-    // SOCKET functie die hier moet blijven staan.
+
     var socket = Socket.connectGame($stateParams.id);
     socket.on('match', function (data) {
         _deleteTileFromBoard(data[0]);
@@ -13,12 +13,12 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
         _getMatchedTiles();
     });
 
-
     _init(); // initialize controller
 
     self.clickHandler = function (tile) {
-        if (_isPlayer()) { // are we a player of this game?
-            // second click so check if it is valid
+        // player is valid
+        if (_isPlayer()) {
+            // check for match
             if (self.tempTile != undefined) {
                 TileService.easyVerification(tile, self.tiles);
                 GameService.matchTiles($stateParams.id, self.tempTile, tile, function (result) {
@@ -38,7 +38,7 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
             }
         }
         else {
-            $mdToast.show($mdToast.simple().textContent("Spectators cant play"));
+            $mdToast.show($mdToast.simple().textContent("As a spectator you only can watch"));
         }
     };
 
@@ -58,7 +58,7 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
     };
 
     function _deleteTileFromBoard(tile) {
-        // get the tile with the same id from the tilelist
+        // get tilte X from tile list
         var tileToDelet = $filter('tileById')(self.tiles, tile._id);
 
         if (tileToDelet != null) {

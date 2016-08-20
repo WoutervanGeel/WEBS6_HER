@@ -3,8 +3,7 @@ module.exports = function () {
         restrict: 'E',
         link: function (scope, element) {
             var tile = scope.tile;
-            var className = tile.tile.suit + "-" + tile.tile.name;
-            element.addClass(className)
+            element.addClass(tile.tile.suit + "_" + tile.tile.name);
         }
     };
 };

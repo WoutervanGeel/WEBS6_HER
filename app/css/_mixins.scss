@@ -1,0 +1,14 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin transform($deg) {
+  -webkit-transform: scale(1)  skew($deg, 0deg);
+  -moz-transform:  scale(1) skew($deg, 0deg);
+  -o-transform:  scale(1) skew($deg, 0deg);
+  -ms-transform:  scale(1) skew($deg, 0deg);
+  transform: scale(1) skew($deg, 0deg);
+}

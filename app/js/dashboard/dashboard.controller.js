@@ -1,8 +1,10 @@
 module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScope) {
     var self = this;
+    
     self.games = {};
     self.game = {};
-    self.total;
+    self.total = 0;
+    self.selected = [];
     $rootScope.playing = false;
 
     self.setGameStateFilter = function (gameState) {
@@ -20,7 +22,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         pageSelect: false
     };
 
-    self.selected = [];
     self.limitOptions = [10, 20, 50, 100, {
         label: 'All',
         value: function () {
@@ -42,8 +43,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.onPaginate = function (page, limit) {
-        console.log('Scope Page: ' + self.query.page + ' Scope Limit: ' + self.query.limit);
-        console.log('Page: ' + page + ' Limit: ' + limit);
         self.promise = $timeout(function () {
         }, 2000);
 
@@ -57,14 +56,14 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         console.log(item.name, 'was selected');
     };
 
+    // opslaan van huidige game
     self.setGame = function (game) {
-        //Parse the whole JSON object
         self.game = game;
     };
+    
     DashBoardService.gameStates(function (result) {
         if (result.statusText == 'OK') {
             self.total = result.data[0].count + result.data[1].count + result.data[2].count;
-            console.log(total);
         }
     });
 
@@ -72,7 +71,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         DashBoardService.getGames(self.total, self.query.page, function (result) {
             if (result.statusText == 'OK') {
                 self.games = result.data;
-                console.log(self.games);
             }
             else {
                 $mdToast.show($mdToast.simple().textContent(result.data.message));
@@ -81,12 +79,9 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.getGame = function (id) {
-        console.log(id);
         DashBoardService.getGame(id, function (result) {
             if (result.statusText == 'OK') {
-                console.log(result.data);
                 self.game = result.data;
-
             }
             else {
                 $mdToast.show($mdToast.simple().textContent(result.data.message));
@@ -107,7 +102,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.joinGame = function (id) {
-        console.log(id);
         DashBoardService.joinGame(id, function (result) {
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent('Joined game!'));
@@ -123,7 +117,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     self.playGame = function (gameId) {
         DashBoardService.getGame(gameId, function (result) {
-            console.log(result);
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent("Playing game!"));
                 $state.go('app.game', { id: gameId });
@@ -136,7 +129,6 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     self.spectateGame = function (gameId) {
         DashBoardService.getGame(gameId, function (result) {
-            console.log(result);
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent("Spectating game!"));
                 $state.go('app.game', { id: gameId });

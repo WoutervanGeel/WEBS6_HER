@@ -37,7 +37,8 @@ module.exports = function ($rootScope) {
             if (result != undefined && angular != undefined) {
                 var wrappedResult = angular.element(result);
                 if(wrappedResult != undefined)
-                    wrappedResult[0].setAttribute('href', "css/" + service.getBoardThemeSetting() + ".css");
+                    if(wrappedResult[0] != undefined)
+                        wrappedResult[0].setAttribute('href', "css/" + service.getBoardThemeSetting() + ".css");
             }
         }
 

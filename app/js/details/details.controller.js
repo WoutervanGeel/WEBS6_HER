@@ -2,10 +2,10 @@ module.exports = function ($scope, DetailsService, $mdToast, $state, $mdDialog) 
 
     var self = this;
     
-    // game variabel
+    // game variabele
     self.game =  {};
 
-    // onload dialog: set game
+    // bij opstarten popup
     if($scope != undefined) {
         if($scope.params != undefined) {
             if ($scope.params.game != undefined) {
@@ -72,7 +72,7 @@ module.exports = function ($scope, DetailsService, $mdToast, $state, $mdDialog) 
         })
     };
 
-    // kijken of een speler bestaat
+    // kijken of een speler in een game is
     self.playerInGame = function (game, username) {
         for (var i = 0; i < game.players.length; i++) {
             if (game.players[i]._id == username)

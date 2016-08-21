@@ -1,4 +1,5 @@
 module.exports = function () {
+    // token en username meegeven
     var inject = {
         request: function (config) {
             config.headers['x-username'] = localStorage.getItem("username");

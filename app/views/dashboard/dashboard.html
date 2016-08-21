@@ -23,6 +23,7 @@
                 <thead ng-if="!DashC.options.decapitate" md-head data-md-order="DashC.query.order">
                 <tr md-row>
                     <th md-column md:order:by="createdBy"><span>Created by ...</span></th>
+                    <th md-column md-numeric md-order-by="players.length"><span>Players</span></th>
                     <th md-column md:order:by="state"><span>Status</span></th>
                     <th md-column data-md-order-by="gameTemplate.id"><span>Template</span></th>
                     <th md-column data-md-order-by="createdOn"><span>Datum</span></th>
@@ -33,6 +34,7 @@
                     md-on-deselect="deselect" x-md-auto-select="DashC.options.autoSelect"
                     data-ng-repeat="game in filteredGameList = (DashC.games | gameState: DashC.gameStateFilter | orderBy: DashC.query.order) | limitTo: DashC.query.limit: (DashC.query.page - 1) * DashC.query.limit">
                     <td md-cell><strong>{{game.createdBy.name}}</strong><br/>{{game.createdBy._id}}</td>
+                    <td md-cell>{{game.players.length}}</td>
                     <td md-cell>{{game.state}}</td>
                     <td md-cell>{{game.gameTemplate.id}}</td>
                     <td md-cell>{{game.createdOn | date:'yyyy-MM-dd HH:mm'}}</td>

@@ -1,11 +1,10 @@
 module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScope) {
     var self = this;
-    
     self.games = {};
     self.game = {};
     self.total = 0;
-    self.selected = [];
     $rootScope.playing = false;
+    self.gameStateFilter = '';
 
     self.setGameStateFilter = function (gameState) {
         self.gameStateFilter = gameState;
@@ -22,6 +21,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         pageSelect: false
     };
 
+    self.selected = [];
     self.limitOptions = [10, 20, 50, 100, {
         label: 'All',
         value: function () {
@@ -43,6 +43,8 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.onPaginate = function (page, limit) {
+        console.log('Scope Page: ' + self.query.page + ' Scope Limit: ' + self.query.limit);
+        console.log('Page: ' + page + ' Limit: ' + limit);
         self.promise = $timeout(function () {
         }, 2000);
 
@@ -56,11 +58,10 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         console.log(item.name, 'was selected');
     };
 
-    // opslaan van huidige game
     self.setGame = function (game) {
         self.game = game;
     };
-    
+
     DashBoardService.gameStates(function (result) {
         if (result.statusText == 'OK') {
             self.total = result.data[0].count + result.data[1].count + result.data[2].count;
@@ -81,7 +82,9 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     self.getGame = function (id) {
         DashBoardService.getGame(id, function (result) {
             if (result.statusText == 'OK') {
+                console.log(result.data);
                 self.game = result.data;
+
             }
             else {
                 $mdToast.show($mdToast.simple().textContent(result.data.message));
@@ -102,6 +105,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.joinGame = function (id) {
+        console.log(id);
         DashBoardService.joinGame(id, function (result) {
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent('Joined game!'));
@@ -140,13 +144,13 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     };
 
     self.playerExists = function (game, username) {
-        for (i = 0; i < game.players.length; i++) {
-            if (game.players[i]._id == username) {
-                return true
-            }
+        for (var i = 0; i < game.players.length; i++) {
+            if (game.players[i]._id == username)
+                return true;
         }
+        return false;
     };
 
-    // Load data automatically when the user opens page
+    // ONLOAD
     self.getGames();
 };

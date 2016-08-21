@@ -1,6 +1,6 @@
-describe('Filter test', function () {
+describe('IsPlayer filter test', function () {
     var $filter;
-    var currentPlayer = 'aw.vanzijderveld@student.avans.nl';
+    var currentPlayer = 'w.vangeel@student.avans.nl';
 
     beforeEach(module('webs6'));
 
@@ -23,7 +23,6 @@ describe('Filter test', function () {
             });
 
         var result = $filter('spectate')(players, currentPlayer);
-        console.log(result);
         expect(result).to.be.true;
     });
 
@@ -32,7 +31,7 @@ describe('Filter test', function () {
 
         players.push(
             {
-                _id: '12313'
+                _id: '1'
             },
             {
                 _id: 'id2'

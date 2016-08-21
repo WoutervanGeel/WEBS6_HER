@@ -13,34 +13,16 @@ $tile_height: 89;
 $tile_width: 73;
 
 @import "mixins";
+@import "global";
 
 .tile {
-
 	@include border-radius(16px);
 	height: $tile_height + px;
 	width: $tile_width + px;
-	display: block;
-	margin: 5px;
-	position: relative;
-	border: solid 1px #333;
-	box-sizing: border-box;
-	outline: none;
 
 	&.boardItem {
-
 		@include transform(25deg);
-		position: absolute;
-		margin:0;
 		border-width: 3px;
-
-		&:hover {
-			border-color: #1e88e5;
-		}
-
-		&.selected {
-			border-color: #f00;
-		}
-
 	}
  }
 

@@ -1,13 +1,22 @@
-module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScope) {
+module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $rootScope, $mdDialog) {
     var self = this;
     
     //variabelen
     self.games = {};
-    self.game = {};
+    self.game =  {};
     self.total = 0;
     self.selected = [];
     $rootScope.playing = false;
     self.gameStateFilter = '';
+
+    // onload dialog: set game
+    if($scope != undefined) {
+        if($scope.params != undefined) {
+            if ($scope.params.game != undefined) {
+                self.game = $scope.params.game;
+            }
+        }
+    }
 
     // informatie voor pagination
     self.query = {
@@ -38,6 +47,18 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     self.setGameStateFilter = function (gameState) {
         self.gameStateFilter = gameState;
     }
+
+    self.showDetails = function () {
+        var scope = $rootScope.$new();
+        scope.params = { game: self.game};
+        $mdDialog.show({
+            scope: scope,
+            templateUrl: 'views/dashboard/details.html',
+            controller: 'DashboardController as DashC',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        });
+    };
 
     // terug naar pagina 1
     self.firstPage = function () {
@@ -82,6 +103,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     //starten van een game
     self.startGame = function (gameId) {
+        $mdDialog.hide();
         DashBoardService.startGame(gameId, function (result) {
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent("Game Started!"));
@@ -95,6 +117,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     // deelname aan een game aanvragen
     self.joinGame = function (id) {
+        $mdDialog.hide();
         DashBoardService.joinGame(id, function (result) {
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent('Joined game!'));
@@ -110,6 +133,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     // een game spelen
     self.playGame = function (gameId) {
+        $mdDialog.hide();
         DashBoardService.getGame(gameId, function (result) {
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent("Playing game!"));
@@ -123,6 +147,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
 
     // een game bekijken
     self.spectateGame = function (gameId) {
+        $mdDialog.hide();
         DashBoardService.getGame(gameId, function (result) {
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent("Spectating game!"));

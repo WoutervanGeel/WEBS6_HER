@@ -5,6 +5,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     self.total = 0;
     $rootScope.playing = false;
     self.gameStateFilter = '';
+    self.selectedUser = '';
 
     self.setGameStateFilter = function (gameState) {
         self.gameStateFilter = gameState;
@@ -45,9 +46,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
     self.onPaginate = function (page, limit) {
         console.log('Scope Page: ' + self.query.page + ' Scope Limit: ' + self.query.limit);
         console.log('Page: ' + page + ' Limit: ' + limit);
-        self.promise = $timeout(function () {
-        }, 2000);
-
+        window.setTimeout(2000);
     };
 
     self.logOrder = function (order) {

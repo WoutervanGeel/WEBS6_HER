@@ -13,9 +13,6 @@
         <md-button class="md-raised" aria-label="New Game" ng-click="MenuC.showAddGamePopup()" ng-if="!playing">
             New Game
         </md-button>
-        <md-button class="md-raised" aria-label="Dashboard" ng-click="MenuC.goToDashboard()" ng-if="playing">
-            Dashboard
-        </md-button>
     </div>
 </md-toolbar>
 
@@ -30,6 +27,11 @@
     </md-toolbar>
     <md-content layout-margin>
         <md-list>
+            <md-list-item ng-click="MenuC.toggleMenu();MenuC.goToDashboard()">
+                <icon class="material-icons" style="margin-right:10px;">home</icon>
+                <p>Dashboard</p>
+            </md-list-item>
+
             <md-list-item ng-click="MenuC.toggleMenu();MenuC.goToPreferences()">
                 <icon class="material-icons" style="margin-right:10px;">settings</icon>
                 <p>Settings</p>

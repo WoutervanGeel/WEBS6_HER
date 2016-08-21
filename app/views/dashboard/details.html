@@ -1,31 +1,32 @@
 <md-content md-theme-watch layout-gt-sm="row" layout-padding>
-    <form name="game">
+    <form name="newGame">
 
-        <h4>#{{DashC.game.id}}</h4>
+        <h4>#{{DetailsC.game.id}}</h4>
 
         <md-card>
             <md-list>
-                <md-list-item ng-repeat="player in DashC.game.players">
+                <md-list-item ng-repeat="player in DetailsC.game.players">
                     {{player.name}}
                 </md-list-item>
             </md-list>
         </md-card>
 
-            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.joinGame(DashC.game.id)"
-                       ng-disabled="DashC.playerInGame(DashC.game,username)"
-                       ng-if="DashC.game.state == 'open'">Join
-            </md-button>
-            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.startGame(DashC.game.id)"
-                       ng-disabled="DashC.game.createdBy._id!=username"
-                       ng-if="DashC.game.state == 'open'">Start
-            </md-button>
-            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.playGame(DashC.game.id)"
-                       ng-disabled="!DashC.playerInGame(DashC.game,username)"
-                       ng-if="DashC.game.state == 'playing'">Play
-            </md-button>
-            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.spectateGame(DashC.game.id)"
-                       ng-if="DashC.game.state == 'playing' || DashC.game.state == 'finished'">
-                Spectate
-            </md-button>
+        <md-button class="md-raised md-primary md-hue-2" ng-click="DetailsC.joinGame(DetailsC.game.id)"
+                   ng-disabled="DetailsC.playerInGame(DetailsC.game,username)"
+                   ng-if="DetailsC.game.state == 'open'">Join
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-2" ng-click="DetailsC.startGame(DetailsC.game.id)"
+                   ng-disabled="DetailsC.game.createdBy._id!=username"
+                   ng-if="DetailsC.game.state == 'open'">Start
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-2" ng-click="DetailsC.playGame(DetailsC.game.id)"
+                   ng-disabled="!DetailsC.playerInGame(DetailsC.game,username)"
+                   ng-if="DetailsC.game.state == 'playing'">Play
+        </md-button>
+        <md-button class="md-raised md-primary md-hue-2" ng-click="DetailsC.spectateGame(DetailsC.game.id)"
+                   ng-if="DetailsC.game.state == 'playing' || DetailsC.game.state == 'finished'">
+            Spectate
+        </md-button>
+
     </form>
 </md-content>

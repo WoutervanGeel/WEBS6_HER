@@ -2,8 +2,8 @@ module.exports = function ($http, APIService) {
 
     var service = {};
 
-    service.getGames = function (pageSize, pageIndex, callback) {
-        $http.get(APIService.games() + '?pageSize=' + pageSize + '&pageIndex=' + pageIndex)
+    service.getGame = function (id, callback) {
+        $http.get(APIService.game(id))
             .then(function (response) {
                 callback(response);
             }, function (error) {
@@ -11,8 +11,8 @@ module.exports = function ($http, APIService) {
             });
     };
 
-    service.gameStates = function (callback) {
-        $http.get(APIService.gameStates())
+    service.joinGame = function (id, callback) {
+        $http.post(APIService.gamePlayers(id))
             .then(function (response) {
                 callback(response);
             }, function (error) {
@@ -20,8 +20,8 @@ module.exports = function ($http, APIService) {
             });
     };
 
-    service.gameTemplates = function (callback) {
-        $http.get(APIService.gameTemplates())
+    service.startGame = function (id, callback) {
+        $http.post(APIService.gameStart(id))
             .then(function (response) {
                 callback(response);
             }, function (error) {

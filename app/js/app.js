@@ -22,6 +22,8 @@ app.filter('gameState', require('./util/gameState.filter.js'));
 app.service('APIService', require('./util/api.service.js'));
 app.service('AuthenticationService', require('./auth/auth.service.js'));
 app.service('DashBoardService', require('./dashboard/dashboard.service.js'));
+app.service('DetailsService', require('./details/details.service.js'));
+app.service('CreateService', require('./create/create.service.js'));
 app.service('GameService', require('./game/game.service.js'));
 app.service('SettingsService', require('./settings/settings.service.js'));
 
@@ -33,6 +35,8 @@ app.factory('Socket', require('./util/socket.factory.js'));
 app.controller('MenuController', require('./menu/menu.controller.js'));
 app.controller('AuthController', require('./auth/auth.controller.js'));
 app.controller('DashboardController', require('./dashboard/dashboard.controller.js'));
+app.controller('DetailsController', require('./details/details.controller.js'));
+app.controller('CreateController', require('./create/create.controller.js'));
 app.controller('GameController', require('./game/game.controller.js'));
 app.controller('SettingsController', require('./settings/settings.controller.js'));
 

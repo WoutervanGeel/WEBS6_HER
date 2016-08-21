@@ -1,22 +1,13 @@
 module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $rootScope, $mdDialog) {
+
     var self = this;
     
     //variabelen
     self.games = {};
-    self.game =  {};
     self.total = 0;
     self.selected = [];
     $rootScope.playing = false;
     self.gameStateFilter = '';
-
-    // onload dialog: set game
-    if($scope != undefined) {
-        if($scope.params != undefined) {
-            if ($scope.params.game != undefined) {
-                self.game = $scope.params.game;
-            }
-        }
-    }
 
     // informatie voor pagination
     self.query = {
@@ -25,7 +16,7 @@ module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $
         page: 1
     };
 
-    //opties voor pagination
+    // opties voor pagination
     self.options = {
         rowSelection: false,
         multiSelect: false,
@@ -43,31 +34,9 @@ module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $
         }]
     };
 
-    //veranderen van de lijstfocus met filters
-    self.setGameStateFilter = function (gameState) {
-        self.gameStateFilter = gameState;
-    }
-
-    self.showDetails = function () {
-        var scope = $rootScope.$new();
-        scope.params = { game: self.game};
-        $mdDialog.show({
-            scope: scope,
-            templateUrl: 'views/dashboard/details.html',
-            controller: 'DashboardController as DashC',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true
-        });
-    };
-
     // terug naar pagina 1
     self.firstPage = function () {
         self.query.page = 1;
-    };
-
-    // opslaan van de game
-    self.setGame = function (game) {
-        self.game = game;
     };
 
     // berekenen van het totaal aantal games
@@ -89,85 +58,30 @@ module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $
         });
     };
 
-    // enkele game ophalen en opslaan
-    self.getGame = function (id) {
-        DashBoardService.getGame(id, function (result) {
-            if (result.statusText == 'OK') {
-                self.game = result.data;
-            }
-            else {
-                $mdToast.show($mdToast.simple().textContent(result.data.message));
-            }
+    // popup starten om game aan te maken
+    self.showAddGamePopup = function () {
+        $mdDialog.show({
+            templateUrl: 'views/dashboard/create.html',
+            controller: 'CreateController as CreateC',
+            parent: angular.element(document.body),
+            clickOutsideToClose: false
         });
     };
 
-    //starten van een game
-    self.startGame = function (gameId) {
-        $mdDialog.hide();
-        DashBoardService.startGame(gameId, function (result) {
-            if (result.statusText == 'OK') {
-                $mdToast.show($mdToast.simple().textContent("Game Started!"));
-                $state.go('app.game', { id: gameId });
-            }
-            else {
-                $mdToast.show($mdToast.simple().textContent(result.data.message));
-            }
-        })
-    };
-
-    // deelname aan een game aanvragen
-    self.joinGame = function (id) {
-        $mdDialog.hide();
-        DashBoardService.joinGame(id, function (result) {
-            if (result.statusText == 'OK') {
-                $mdToast.show($mdToast.simple().textContent('Joined game!'));
-                self.getGame(id);
-                self.getGames();
-                var socket = Socket.connectGame(id);
-            }
-            else {
-                $mdToast.show($mdToast.simple().textContent(result.data.message));
-            }
+    // popup starten om details van een game te bekijken
+    self.showDetails = function (selected) {
+        var scope = $rootScope.$new();
+        scope.params = { game: selected};
+        $mdDialog.show({
+            scope: scope,
+            templateUrl: 'views/dashboard/details.html',
+            controller: 'DetailsController as DetailsC',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
         });
-    };
-
-    // een game spelen
-    self.playGame = function (gameId) {
-        $mdDialog.hide();
-        DashBoardService.getGame(gameId, function (result) {
-            if (result.statusText == 'OK') {
-                $mdToast.show($mdToast.simple().textContent("Playing game!"));
-                $state.go('app.game', { id: gameId });
-            }
-            else {
-                $mdToast.show($mdToast.simple().textContent(result.data.message));
-            }
-        })
-    };
-
-    // een game bekijken
-    self.spectateGame = function (gameId) {
-        $mdDialog.hide();
-        DashBoardService.getGame(gameId, function (result) {
-            if (result.statusText == 'OK') {
-                $mdToast.show($mdToast.simple().textContent("Spectating game!"));
-                $state.go('app.game', { id: gameId });
-            }
-            else {
-                $mdToast.show($mdToast.simple().textContent(result.data.message));
-            }
-        })
-    };
-
-    // kijken of een speler bestaat
-    self.playerInGame = function (game, username) {
-        for (var i = 0; i < game.players.length; i++) {
-            if (game.players[i]._id == username)
-                return true;
-        }
-        return false;
     };
 
     // ONLOAD
     self.getGames();
+
 };

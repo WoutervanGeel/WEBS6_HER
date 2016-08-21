@@ -1,0 +1,59 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="Board">
+         <md-card>
+            <div layout="row" layout-align="center" style="height: 760px">
+                <tile ng-repeat="tile in GameC.tiles" ng-click="GameC.clickHandler(tile)"></tile>
+            </div>
+         </md-card>
+    </md-tab>
+    <md-tab label="History">
+        <md-card>
+            <md-tabs md-dynamic-height>
+
+            <md-tab ng-repeat="player in GameC.players" label="{{player.name}}">
+                <md-tab-body>
+                    <md-content class="md-primary">
+                        <div layout="column" flex>
+                            <md-list>
+                                <md-list-item ng-repeat="tile in GameC.matchedTiles | foundBy:player._id">
+
+                                    <div style="float:left;width:40px;">
+                                        <strong>#{{$index + 1}}</strong>
+                                    </div>
+                                    <div>
+                                        <matchedTile></matchedTile>
+                                    </div>
+                                    <div style="width:60%;">
+                                        <strong>{{tile.tile.suit}} {{tile.tile.name}}</strong>
+                                    </div>
+                                    <div flex="30">
+                                        Time: <strong>{{tile.match.foundOn | date:'dd-MM-yyyy HH:mm:ss'}}</strong>
+                                    </div>
+                                    <md-divider ng-if="!$last"></md-divider>
+
+                                </md-list-item>
+
+                                <!--
+                                 <div flex="30">
+                                    <matchedTile style="left: 0;"></matchedTile>
+                                    <matchedTile style="left: 80px;float:left;"></matchedTile>
+                                    </div>
+                                    <div class="md-list-item-text" flex="33">
+                                        <h2>matched tiles: {{tile.tile.suit}} - {{tile.tile.name}}</h2>
+                                        <p>Zet nummer: {{$index + 1}}</p>
+                                    </div>
+                                    <div class="md-list-item-text" flex="33">
+                                        <h2>Datum</h2>
+                                        <p>{{tile.match.foundOn | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                                    </div>
+                                    <md-divider ng-if="!$last"></md-divider>
+-->
+                            </md-list>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+        </md-card>
+    </md-tab>
+</md-tabs>

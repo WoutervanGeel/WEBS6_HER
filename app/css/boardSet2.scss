@@ -14,20 +14,42 @@ $tile_width: 62;
 $start_left_margin: 73;
 $start_top_margin: 11;
 
-.tile{
-	transform:  scale(1) skew(10deg,0deg);
-	box-shadow: 0px 5px 5px #2a2a2a;
-    position: absolute;
-    height: $tile_height + px;
-    width: $tile_width + px;
+@import "mixins";
+
+
+.tile {
+	height: $tile_height + px;
+	width: $tile_width + px;
+	display: block;
+	margin: 5px;
+	position: relative;
+	border: solid 1px #333;
+	box-sizing: border-box;
+	outline: none;
+
+	&.boardItem {
+
+		@include transform(10deg);
+		position: absolute;
+		border-width: 1px;
+		margin:0;
+		box-shadow: 0px 5px 5px #2a2a2a;
+
+		&:hover {
+			border-color: #1e88e5;
+		}
+
+		&.selected {
+			border-color: #f00;
+		}
+
+	}
 }
-.tile:hover{
-	border: red ridge 2px;
-}
+
 @each $suit in $tilesuits{
 	@if $suit == Bamboo{
 		@for $i from 1 through $bamboos{
-			.#{$suit+"-"+$i}{
+			.#{$suit+"_"+$i}{
 				@extend .tile;
 				$custom_down: $tile_height * 4 + $start_top_margin;
                 $custom_right: ($i - 1)* $tile_width + $start_left_margin;
@@ -37,7 +59,7 @@ $start_top_margin: 11;
 	}
     @if $suit == Circle{
 		@for $i from 1 through $circles{
-			.#{$suit+"-"+$i}{
+			.#{$suit+"_"+$i}{
 				@extend .tile;
 				$custom_down: $start_top_margin;
                 $custom_right: ($i - 1)* $tile_width + $start_left_margin;
@@ -47,7 +69,7 @@ $start_top_margin: 11;
 	}
     @if $suit == Character{
 		@for $i from 1 through $characters{
-			.#{$suit+"-"+$i}{
+			.#{$suit+"_"+$i}{
 				@extend .tile;
 				$custom_down: $tile_height * 8 + $start_top_margin;
                 $custom_right: ($i - 1)* $tile_width + $start_left_margin;
@@ -58,7 +80,7 @@ $start_top_margin: 11;
 	@if $suit == Dragon{
 		$custom_right: ($tile_width * $characters) + $start_left_margin; 
 		@each $dragon in $dragons{
-			.#{$suit+"-"+$dragon}{
+			.#{$suit+"_"+$dragon}{
 				@extend .tile;
 				$custom_down: ($tile_height * 9) + $start_top_margin;
 				background: #{'url('+$file_path+') -'+$custom_right+'px -'+$custom_down+'px'};
@@ -69,7 +91,7 @@ $start_top_margin: 11;
 	@if $suit == Wind{
 		$custom_right: ($tile_width * $circles) + $start_left_margin;
 		@each $wind in $winds{
-			.#{$suit+"-"+$wind}{
+			.#{$suit+"_"+$wind}{
 				@extend .tile;
 					$custom_down: $start_top_margin;
 					background: #{'url('+$file_path+') -'+$custom_right+'px -'+$custom_down+'px'};
@@ -80,7 +102,7 @@ $start_top_margin: 11;
     @if $suit == Season{
 		$custom_down: $tile_height * 7 + $start_top_margin;
 		@each $season in $seasons{
-			.#{$suit+"-"+$season}{
+			.#{$suit+"_"+$season}{
 				@extend .tile;
 				$custom_right: ($tile_width * $bamboos)+ $start_left_margin;
                 background: #{'url('+$file_path+') -'+$custom_right+'px -'+$custom_down+'px'};
@@ -91,7 +113,7 @@ $start_top_margin: 11;
     	@if $suit == Flower{
 	    $custom_down: $tile_height * 7 + $start_top_margin;
 		@each $flower in $flowers{
-			.#{$suit+"-"+$flower}{
+			.#{$suit+"_"+$flower}{
 				@extend .tile;
 				$custom_right: ($tile_width * 12)+ $start_left_margin;
 				background: #{'url('+$file_path+') -'+$custom_right+'px -'+$custom_down+'px'};

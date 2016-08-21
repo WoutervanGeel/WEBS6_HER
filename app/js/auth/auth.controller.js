@@ -1,22 +1,11 @@
-module.exports = function ($location, AuthenticationService, $mdDialog) {
-    
-    if ($location.search().username != undefined) {
-        // username is gezet
-        var username = $location.search().username;
-        var token = $location.search().token;
+module.exports = function ($location, AuthenticationService) {
 
-        //save values in service
-        AuthenticationService.setLocalUserValues(username, token);
+    var urlSet = $location.search();
+    if (urlSet.username && urlSet.token) {
+        AuthenticationService.setLocalUserValues(urlSet.username, urlSet.token);
     }
     else {
-        // weergeven van landingpage navigatie popup
-        $mdDialog.show({
-            templateUrl: 'views/login/login.html',
-            controller: 'MenuController as MenuC',
-            parent: angular.element(document.body),
-            clickOutsideToClose: false
-        });
+        AuthenticationService.goToExternalLogin();
     }
-
 
 };

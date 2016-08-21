@@ -9,7 +9,7 @@ module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $
     $rootScope.playing = false;
     self.gameStateFilter = '';
 
-    // onload dialog: set game
+    // opslaan van game bij laden
     if($scope != undefined) {
         if($scope.params != undefined) {
             if ($scope.params.game != undefined) {
@@ -48,6 +48,7 @@ module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $
         self.gameStateFilter = gameState;
     }
 
+    //weergeven van game informatie
     self.showDetails = function () {
         var scope = $rootScope.$new();
         scope.params = { game: self.game};

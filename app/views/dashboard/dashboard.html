@@ -5,10 +5,13 @@
     <md-nav-item md-nav-click="DashC.setGameStateFilter('username');DashC.setGame(null);DashC.firstPage()" name="page2">
         My Games
     </md-nav-item>
-    <md-nav-item md-nav-click="DashC.setGameStateFilter('playing');DashC.setGame(null);DashC.firstPage()" name="page3">
-        Spectate
+    <md-nav-item md-nav-click="DashC.setGameStateFilter('open');DashC.setGame(null);DashC.firstPage()" name="page3">
+        Open
     </md-nav-item>
-    <md-nav-item md-nav-click="DashC.setGameStateFilter('finished');DashC.setGame(null);DashC.firstPage()" name="page4">
+    <md-nav-item md-nav-click="DashC.setGameStateFilter('playing');DashC.setGame(null);DashC.firstPage()" name="page4">
+        Playing
+    </md-nav-item>
+    <md-nav-item md-nav-click="DashC.setGameStateFilter('finished');DashC.setGame(null);DashC.firstPage()" name="page5">
         Finished
     </md-nav-item>
 </md-nav-bar>

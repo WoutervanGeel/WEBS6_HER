@@ -9,10 +9,6 @@ module.exports = function ($http, APIService) {
     }
     var service = {};
 
-    service.setCredentials = function (id) {
-        api.id = id;
-    };
-
     service.setGameSettings = function (template, minPlayers, maxPlayers) {
         game.template = template;
         game.minPlayers = minPlayers;

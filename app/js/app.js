@@ -16,6 +16,7 @@ app.directive('matchedtile', require('./directives/matchedTile.directive.js'));
 app.filter('tileById', require('./util/tileById.filter.js'));
 app.filter('foundBy', require('./util/foundBy.filter.js'));
 app.filter('spectate', require('./util/spectate.filter.js'));
+app.filter('gameState', require('./util/gameState.filter.js'));
 
 // SERVICES
 app.service('APIService', require('./util/api.service.js'));

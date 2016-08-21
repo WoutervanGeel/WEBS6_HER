@@ -13,13 +13,13 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
         _getMatchedTiles();
     });
 
-    _init(); // initialize controller
+    _init();
 
     self.clickHandler = function (tile) {
-        // player is valid
         if (_isPlayer()) {
-            // check for match
+            //gebruiker is een speler
             if (self.tempTile != undefined) {
+                // tile bestaat
                 TileService.easyVerification(tile, self.tiles);
                 GameService.matchTiles($stateParams.id, self.tempTile, tile, function (result) {
                     if (result.statusText == 'OK') {
@@ -32,8 +32,8 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
                     }
                 });
             }
-            // first click
             else {
+                //eerste tile
                 self.tempTile = tile;
             }
         }
@@ -42,12 +42,13 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
         }
     };
 
+    // kijken of gebruiker een speler is
     function _isPlayer() {
         return $filter('spectate')(self.players, $rootScope.username);
     }
 
-    function _getMatchedTiles() {
-        // get matched tiles 
+    //ophalen van alle gematchde tiles
+    function _getMatchedTiles() { 
         GameService.getMatchedTiles($stateParams.id, function (result) {
             if (result.statusText == 'OK') {
                 self.matchedTiles = result.data;
@@ -57,8 +58,8 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
         })
     };
 
+    //verwijderen van tile van het bord
     function _deleteTileFromBoard(tile) {
-        // get tilte X from tile list
         var tileToDelet = $filter('tileById')(self.tiles, tile._id);
 
         if (tileToDelet != null) {

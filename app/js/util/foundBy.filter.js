@@ -1,4 +1,5 @@
 module.exports = function () {
+    //filter om terug te geven welke matches een player heeft gevonden
     return function (input, player) {
         var i, len = input.length;
         var filtered = [];

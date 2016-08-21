@@ -31,9 +31,15 @@ module.exports = function ($rootScope) {
 
     // regelen van gekozen settings
     service.preferenceHandler = function () {
-        var result = document.getElementsByClassName("BoardStyle");
-        var wrappedResult = angular.element(result);
-        wrappedResult[0].setAttribute('href', "css/"+service.getBoardThemeSetting()+".css");
+        // verander stylesheet naar gekozen boardstijl
+        if(document != undefined) {
+            var result = document.getElementsByClassName("BoardStyle");
+            if (result != undefined && angular != undefined) {
+                var wrappedResult = angular.element(result);
+                if(wrappedResult != undefined)
+                    wrappedResult[0].setAttribute('href', "css/" + service.getBoardThemeSetting() + ".css");
+            }
+        }
 
         $rootScope.Theme = service.getThemeSetting();
     };

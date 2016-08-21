@@ -1,4 +1,4 @@
-module.exports = function (GameService, $stateParams, $filter, Socket, $rootScope, $mdToast, TileService) {
+module.exports = function (GameService, $stateParams, $filter, Socket, $rootScope, $mdToast) {
     var self = this;
     self.tiles = {};
     self.tempTile = undefined;
@@ -6,21 +6,60 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
     self.matchedTiles = {};
     $rootScope.playing = true;
 
+    function _init() {
+        GameService.getGame($stateParams.id, function (result) {
+            if (result.statusText == 'OK') {
+                self.players = result.data;
+                console.log(result.data);
+                console.log(_isPlayer());
+            } else {
+                console.log(result.data.message);
+            }
+        });
+        GameService.getTiles($stateParams.id, function (result) {
+            if (result.statusText == 'OK') {
+                self.tiles = result.data;
+            } else {
+                console.log(result.data.message);
+            }
+        });
+
+        _getMatchedTiles();
+    }
+
     var socket = Socket.connectGame($stateParams.id);
     socket.on('match', function (data) {
         _deleteTileFromBoard(data[0]);
         _deleteTileFromBoard(data[1]);
         _getMatchedTiles();
     });
+    
+    //ophalen van alle gematchde tiles
+    function _getMatchedTiles() { 
+        GameService.getMatchedTiles($stateParams.id, function (result) {
+            if (result.statusText == 'OK') {
+                self.matchedTiles = result.data;
+            } else {
+                console.log(result.data.message);
+            }
+        })
+    };
+    
+    //verwijderen van tile van het bord
+    function _deleteTileFromBoard(tile) {
+        var tileToDelet = $filter('tileById')(self.tiles, tile._id);
 
-    _init();
+        if (tileToDelet != null) {
+            var index = self.tiles.indexOf(tileToDelet);
+            self.tiles.splice(index, 1);
+        }
+    };
 
     self.clickHandler = function (tile) {
         if (_isPlayer()) {
             //gebruiker is een speler
             if (self.tempTile != undefined) {
                 // tile bestaat
-                TileService.easyVerification(tile, self.tiles);
                 GameService.matchTiles($stateParams.id, self.tempTile, tile, function (result) {
                     if (result.statusText == 'OK') {
                         console.log("MATCH");
@@ -47,45 +86,5 @@ module.exports = function (GameService, $stateParams, $filter, Socket, $rootScop
         return $filter('spectate')(self.players, $rootScope.username);
     }
 
-    //ophalen van alle gematchde tiles
-    function _getMatchedTiles() { 
-        GameService.getMatchedTiles($stateParams.id, function (result) {
-            if (result.statusText == 'OK') {
-                self.matchedTiles = result.data;
-            } else {
-                console.log(result.data.message);
-            }
-        })
-    };
-
-    //verwijderen van tile van het bord
-    function _deleteTileFromBoard(tile) {
-        var tileToDelet = $filter('tileById')(self.tiles, tile._id);
-
-        if (tileToDelet != null) {
-            var index = self.tiles.indexOf(tileToDelet);
-            self.tiles.splice(index, 1);
-        }
-    };
-
-    function _init() {
-        GameService.getGame($stateParams.id, function (result) {
-            if (result.statusText == 'OK') {
-                self.players = result.data;
-                console.log(result.data);
-                console.log(_isPlayer());
-            } else {
-                console.log(result.data.message);
-            }
-        });
-        GameService.getTiles($stateParams.id, function (result) {
-            if (result.statusText == 'OK') {
-                self.tiles = result.data;
-            } else {
-                console.log(result.data.message);
-            }
-        });
-
-        _getMatchedTiles();
-    }
+    _init();
 };

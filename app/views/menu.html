@@ -1,5 +1,10 @@
+<!-- toolbar -->
 <md-toolbar class="md-hue-2">
     <div class="md-toolbar-tools">
+
+        <md-button class="md-icon-button" aria-label="Settings" ng-click="MenuC.toggleMenu()">
+            <icon class="material-icons">menu</icon>
+        </md-button>
 
         <span><strong>Welcome</strong> {{username}}</span>
 
@@ -11,18 +16,33 @@
         <md-button class="md-raised" aria-label="Dashboard" ng-click="MenuC.goToDashboard()" ng-if="playing">
             Dashboard
         </md-button>
-
-        <md-button class="material-icons md-icon-button" aria-label="Settings" ng-click="MenuC.goToPreferences()">
-            <icon class="material-icons">settings</icon>
-        </md-button>
-
-        <md-button class="material-icons md-icon-button" aria-label="Logout" ng-click="MenuC.logOut()">
-            <icon class="material-icons">power_settings_new</icon>
-        </md-button>
     </div>
 </md-toolbar>
 
-<!-- Show content toolbar -->
+<!-- menu -->
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+    <md-toolbar class="md-toolbar-tools">
+        <h2>Menu</h2>
+        <span flex></span>
+        <md-button class="material-icons md-icon-button" aria-label="Close" ng-click="MenuC.toggleMenu()">
+            <icon class="material-icons">close</icon>
+        </md-button>
+    </md-toolbar>
+    <md-content layout-margin>
+        <md-list>
+            <md-list-item ng-click="MenuC.toggleLeft();MenuC.goToPreferences()">
+                <icon class="material-icons" style="margin-right:10px;">settings</icon>
+                <p>Settings</p>
+            </md-list-item>
+            <md-list-item ng-click="MenuC.logOut()">
+                <icon class="material-icons" style="margin-right:10px;">power_settings_new</icon>
+                <p>Logout</p>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-sidenav>
+
+<!-- content -->
 <md-content class="md-padding">
     <div ui-view name="menuContent" flex></div>
 </md-content>

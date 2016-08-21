@@ -1,4 +1,6 @@
-# Advanced_javascript
+INSTRUCTIES
 
-npm install voor het installeren van de dependencies
-en daarna runnen door grunt
+- Installeer Ruby, globally (vanwege SASS)
+- gem install sass (administrator console)
+- npm install
+- grunt (administrator console)

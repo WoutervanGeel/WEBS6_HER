@@ -1,15 +1,15 @@
 {
   "name": "webs6",
   "version": "1.0.0",
-  "description": "test project",
+  "description": "WEBS6 opdracht van Wouter van Geel en Gijsbert van Corstanje",
   "main": "index.js",
   "scripts": {
     "test": "karma start karma-config.js"
   },
   "keywords": [
-    "test"
+    "webs6"
   ],
-  "author": "Iwan van Zijderveld",
+  "author": "Wouter van Geel en Gijsbert van Corstanje",
   "license": "ISC",
   "devDependencies": {
     "angular": "^1.5.3",

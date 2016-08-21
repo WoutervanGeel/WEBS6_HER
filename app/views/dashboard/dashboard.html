@@ -22,7 +22,7 @@
                    data-ng-model="DashC.selected" md-progress="DashC.promise">
                 <thead ng-if="!DashC.options.decapitate" md-head data-md-order="DashC.query.order">
                 <tr md-row>
-                    <th md-column md:order:by="createdBy"><span>Created by ...</span></th>
+                    <th md-column md-order-by="createdBy.name"><span>Created by ...</span></th>
                     <th md-column md-numeric md-order-by="players.length"><span>Players</span></th>
                     <th md-column md:order:by="state"><span>Status</span></th>
                     <th md-column data-md-order-by="gameTemplate.id"><span>Template</span></th>

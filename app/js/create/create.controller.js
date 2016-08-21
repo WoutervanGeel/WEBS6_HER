@@ -1,4 +1,4 @@
-module.exports = function ($scope, CreateService, $mdToast, $state, Socket, $rootScope, $mdDialog) {
+module.exports = function ($scope, CreateService, $mdToast, $state, Socket, $rootScope, $mdDialog, $window) {
     var self = this;
 
     // vul instellingen
@@ -27,8 +27,8 @@ module.exports = function ($scope, CreateService, $mdToast, $state, Socket, $roo
             if (result.statusText == 'OK') {
                 //gelukt
                 $mdToast.show($mdToast.simple().textContent('Nieuwe game aangemaakt'));
-                $mdDialog.hide();
                 $window.location.reload();
+                $mdDialog.hide();
             }
             else {
                 //error

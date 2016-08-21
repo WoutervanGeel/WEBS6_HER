@@ -2,7 +2,7 @@ describe("Test Interceptor", function () {
     var HttpRequstInterceptor;
     var httpProvider;
     var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.ImF3LnZhbnppamRlcnZlbGRAc3R1ZGVudC5hdmFucy5ubCI.txmm99ugNNJkM_3fFRjeZid9cxrDUAWQKfVjgK24hPs';
-    var username = 'aw.vanzijderveld@student.avans.nl'
+    var username = 'w.vangeel@student.avans.nl'
 
     beforeEach(module('webs6'));
 

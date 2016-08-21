@@ -29,7 +29,7 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr ng-click="DashC.setGame(game)" md-row md-select="game" md-select-id="createdOn"
+                <tr ng-click="DashC.setGame(game);DashC.showDetails();" md-row md-select="game" md-select-id="createdOn"
                     md-on-deselect="deselect" x-md-auto-select="DashC.options.autoSelect"
                     data-ng-repeat="game in filteredGameList = (DashC.games | gameState: DashC.gameStateFilter | orderBy: DashC.query.order) | limitTo: DashC.query.limit: (DashC.query.page - 1) * DashC.query.limit">
                     <td md-cell><strong>{{game.createdBy.name}}</strong><br/>{{game.createdBy._id}}</td>
@@ -45,35 +45,5 @@
                                   md-page-select="DashC.options.pageSelect"
                                   md-boundary-links="DashC.options.boundaryLinks"></data-md-table-pagination>
     </div>
-    <div layout="column" flex ng-if="DashC.game.id != undefined">
-        <md-card>
-            <md-card-title><strong># {{DashC.game.id}}</strong></md-card-title>
 
-            <md-list>
-                <md-subheader class="md-no-sticky">Players</md-subheader>
-                <md-list-item ng-repeat="player in DashC.game.players">
-                    {{player.name}}
-                </md-list-item>
-            </md-list>
-
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.joinGame(DashC.game.id)"
-                           ng-disabled="DashC.playerInGame(DashC.game,username)"
-                           ng-if="DashC.game.id != undefined && DashC.game.state == 'open'">Join
-                </md-button>
-                <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.startGame(DashC.game.id)"
-                           ng-disabled="DashC.game.createdBy._id!=username"
-                           ng-if="DashC.game.id != undefined && DashC.game.state == 'open'">Start
-                </md-button>
-                <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.playGame(DashC.game.id)"
-                           ng-disabled="!DashC.playerInGame(DashC.game,username)"
-                           ng-if="DashC.game.id != undefined && DashC.game.state == 'playing'">Play
-                </md-button>
-                <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.spectateGame(DashC.game.id)"
-                           ng-if="DashC.game.id != undefined && DashC.game.state == 'playing' || DashC.game.state == 'finished'">
-                    Spectate
-                </md-button>
-            </md-card-actions>
-        </md-card>
-    </div>
 </md-content>

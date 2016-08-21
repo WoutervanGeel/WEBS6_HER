@@ -1,0 +1,33 @@
+<md-content md-theme-watch layout-gt-sm="row" layout-padding>
+    <form name="game">
+
+        <h4>#{{DashC.game.id}}</h4>
+
+        <md-card>
+            <md-card-title><strong>Players</strong></md-card-title>
+
+            <md-list>
+                <md-list-item ng-repeat="player in DashC.game.players">
+                    {{player.name}}
+                </md-list-item>
+            </md-list>
+        </md-card>
+
+            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.joinGame(DashC.game.id)"
+                       ng-disabled="DashC.playerExists(DashC.game,username)"
+                       ng-if="DashC.game.state == 'open'">Join
+            </md-button>
+            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.startGame(DashC.game.id)"
+                       ng-disabled="DashC.game.createdBy._id!=username"
+                       ng-if="DashC.game.state == 'open'">Start
+            </md-button>
+            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.playGame(DashC.game.id)"
+                       ng-disabled="!DashC.playerExists(DashC.game,username)"
+                       ng-if="DashC.game.state == 'playing'">Play
+            </md-button>
+            <md-button class="md-raised md-primary md-hue-2" ng-click="DashC.spectateGame(DashC.game.id)"
+                       ng-if="DashC.game.state == 'playing' || DashC.game.state == 'finished'">
+                Spectate
+            </md-button>
+    </form>
+</md-content>

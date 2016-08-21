@@ -1,34 +1,39 @@
-module.exports = function ($scope, AuthenticationService, DashBoardService, $mdToast, $mdDialog, $window, $state) {
+module.exports = function ($scope, AuthenticationService, DashBoardService, $mdToast, $mdDialog, $window, $state, $mdSidenav) {
     var self = this;
     
     self.players = [];
     
-    // restricties zetten
+    // vul instellingen
     self.minPlayers = 1;
     self.maxPlayers = 32;
     self.gameTemplates = ["Dragon", "Monkey", "Ox", "Ram", "Rooster", "Shanghai", "Snake"];
-    
-    // vullen van de players
-    for (i = self.minPlayers; i < self.maxPlayers + 1; i++) {
+
+    // menu toggle
+    self.toggleMenu = function() {
+        $mdSidenav('left').toggle();
+    };
+
+    // vul spelers
+    for (var i = self.minPlayers; i < self.maxPlayers + 1; i++) {
         self.players.push(i);
     }
 
-    //externe login starten
+    // wanneer speler niet is ingelogd
     self.goToLogin = function () {
         AuthenticationService.goToExternalLogin();
     };
 
-    //uitloggen
+    // uitloggen
     self.logOut = function () {
         AuthenticationService.logOut();
     };
 
-    // verwijzen naar dashboard
+    // dashboard button action
     self.goToDashboard = function () {
         $state.go('app.dashboard');
     };
 
-    //popup starten om game aan te maken
+    // popup starten om game aan te maken
     self.showAddGamePopup = function () {
         $mdDialog.show({
             templateUrl: 'views/dashboard/add_game.html',
@@ -38,12 +43,12 @@ module.exports = function ($scope, AuthenticationService, DashBoardService, $mdT
         });
     };
     
-    //stoppen van popup voor het maken van een game
+    // stoppen van popup voor het maken van een game
     self.closeAddGamePopup = function () {
         $mdDialog.hide();
     }
     
-    //popup starten om preferences aan te passen
+    // popup starten om preferences aan te passen
     self.goToPreferences = function () {
         $mdDialog.show({
             templateUrl: 'views/settings/settings.html',
@@ -68,7 +73,7 @@ module.exports = function ($scope, AuthenticationService, DashBoardService, $mdT
             }
             else {
                 //error
-                console.log(result);
+                console.error(result);
             }
         });
     };

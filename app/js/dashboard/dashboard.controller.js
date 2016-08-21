@@ -9,6 +9,15 @@ module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $
     $rootScope.playing = false;
     self.gameStateFilter = '';
 
+    // opslaan van game bij laden
+    if($scope != undefined) {
+        if($scope.params != undefined) {
+            if ($scope.params.game != undefined) {
+                self.game = $scope.params.game;
+            }
+        }
+    }
+
     // informatie voor pagination
     self.query = {
         order: '-createdOn',
@@ -32,6 +41,24 @@ module.exports = function ($scope, DashBoardService, $mdToast, $state, Socket, $
                 return self.total;
             }
         }]
+    };
+
+    //veranderen van de lijstfocus met filters
+    self.setGameStateFilter = function (gameState) {
+        self.gameStateFilter = gameState;
+    }
+
+    //weergeven van game informatie
+    self.showDetails = function () {
+        var scope = $rootScope.$new();
+        scope.params = { game: self.game};
+        $mdDialog.show({
+            scope: scope,
+            templateUrl: 'views/dashboard/details.html',
+            controller: 'DashboardController as DashC',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        });
     };
 
     // terug naar pagina 1

@@ -1,4 +1,5 @@
 module.exports = function ($rootScope) {
+    //filteren wat getoont moet worden in het dashboard
     return function (input, gameStatus) {
         var i, len = input.length;
         var filtered = [];

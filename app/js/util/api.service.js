@@ -17,6 +17,8 @@ module.exports = function () {
         templates: '/gametemplates',
         gameStates: '/gamestates'
     };
+    
+    //routes teruggeven voor api calls
     function _gameBase(id) {
         return _api.base + _api.game.base + '/' + id;
     };
@@ -26,15 +28,12 @@ module.exports = function () {
     service.matchedTiles = function (id) {
         return _gameBase(id) + _api.game.tiles.base + _api.game.tiles.strue;
     };
-
     service.games = function () {
         return _api.base + _api.game.base;
     };
-
     service.game = function (id) {
         return _gameBase(id);
     };
-
     service.gamePlayers = function (id) {
         return _gameBase(id) + _api.game.players
     };

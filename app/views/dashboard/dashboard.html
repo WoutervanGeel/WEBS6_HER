@@ -15,11 +15,8 @@
         Finished
     </md-nav-item>
 </md-nav-bar>
-
 <md-content layout="row" layout-xs="column">
-
     <div layout="column" flex>
-
         <md-table-container>
             <table data-md-table data-md-row-select="DashC.options.rowSelection" multiple="DashC.options.multiSelect"
                    data-ng-model="DashC.selected" md-progress="DashC.promise">
@@ -33,7 +30,7 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr ng-click="DashC.setGame(game);DashC.showDetails();" md-row md-select="game" md-select-id="createdOn"
+                <tr ng-click="DashC.showDetails(game);" md-row md-select="game" md-select-id="createdOn"
                     md-on-deselect="deselect" x-md-auto-select="DashC.options.autoSelect"
                     data-ng-repeat="game in filteredGameList = (DashC.games | gameState: DashC.gameStateFilter | orderBy: DashC.query.order) | limitTo: DashC.query.limit: (DashC.query.page - 1) * DashC.query.limit">
                     <td md-cell><strong>{{game.createdBy.name}}</strong><br/>{{game.createdBy._id}}</td>
@@ -48,7 +45,21 @@
         <data-md-table-pagination md-limit="DashC.query.limit" md-limit-options="DashC.options.limitOptions"
                                   md-page="DashC.query.page" md-total="{{filteredGameList.length}}"
                                   md-page-select="DashC.options.pageSelect"
-                                  md-boundary-links="DashC.options.boundaryLinks"></data-md-table-pagination>
+                                  md-boundary-links="DashC.options.boundaryLinks">
+        </data-md-table-pagination>
     </div>
+    <div layout="column">
+        <md-card layout-padding>
+            <md-radio-group ng-model="DashC.gameStateFilter" class="md-primary" layout-padding>
+                <md-radio-button value="">All Games</md-radio-button>
+                <md-radio-button value="username">My Games</md-radio-button>
+                <md-radio-button value="playing">Playing</md-radio-button>
+                <md-radio-button value="finished">Finished</md-radio-button>
+            </md-radio-group>
 
+            <md-button class="md-primary md-raised" aria-label="New Game" ng-click="DashC.showAddGamePopup()">
+                New Game
+            </md-button>
+        </md-card>
+    </div>
 </md-content>

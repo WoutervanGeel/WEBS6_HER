@@ -31,9 +31,10 @@ module.exports = function ($rootScope) {
 
     // regelen van gekozen settings
     service.preferenceHandler = function () {
-        var result = document.getElementsByClassName("BoardStyle");
-        var wrappedResult = angular.element(result);
-        wrappedResult[0].setAttribute('href', "css/"+service.getBoardThemeSetting()+".css");
+        // var result = document.getElementsByClassName("BoardStyle");
+        // var wrappedResult = angular.element(result);
+        // console.log(wrappedResult);
+        // wrappedResult[0].setAttribute('href', "css/"+service.getBoardThemeSetting()+".css");
 
         $rootScope.Theme = service.getThemeSetting();
     };

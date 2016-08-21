@@ -1,16 +1,22 @@
 module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScope) {
     var self = this;
+    
+    //variabelen
     self.games = {};
     self.game = {};
     self.total = 0;
+    self.selected = [];
     $rootScope.playing = false;
     self.gameStateFilter = '';
-    self.selectedUser = '';
 
-    self.setGameStateFilter = function (gameState) {
-        self.gameStateFilter = gameState;
-    }
+    // informatie voor pagination
+    self.query = {
+        order: '-createdOn',
+        limit: 10,
+        page: 1
+    };
 
+    //opties voor pagination
     self.options = {
         rowSelection: false,
         multiSelect: false,
@@ -19,54 +25,38 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         largeEditDialog: false,
         boundaryLinks: false,
         limitSelect: true,
-        pageSelect: false
+        pageSelect: false,
+        limitOptions: [5, 10, 15, {
+            label: 'All',
+            value: function () {
+                return self.total;
+            }
+        }]
     };
 
-    self.selected = [];
-    self.limitOptions = [10, 20, 50, 100, {
-        label: 'All',
-        value: function () {
-            return self.total;
-        }
-    }];
+    //veranderen van de lijstfocus met filters
+    self.setGameStateFilter = function (gameState) {
+        self.gameStateFilter = gameState;
+    }
 
-    self.query = {
-        order: '-createdOn',
-        limit: 10,
-        page: 1
-    };
-    self.resetPages = function () {
+    // terug naar pagina 1
+    self.firstPage = function () {
         self.query.page = 1;
     };
 
-    self.toggleLimitOptions = function () {
-        self.limitOptions = self.limitOptions ? undefined : [5, 10, 15];
-    };
-
-    self.onPaginate = function (page, limit) {
-        console.log('Scope Page: ' + self.query.page + ' Scope Limit: ' + self.query.limit);
-        console.log('Page: ' + page + ' Limit: ' + limit);
-        window.setTimeout(2000);
-    };
-
-    self.logOrder = function (order) {
-        console.log('order: ', order);
-    };
-
-    self.log = function (item) {
-        console.log(item.name, 'was selected');
-    };
-
+    // opslaan van de game
     self.setGame = function (game) {
         self.game = game;
     };
 
+    // berekenen van het totaal aantal games
     DashBoardService.gameStates(function (result) {
         if (result.statusText == 'OK') {
             self.total = result.data[0].count + result.data[1].count + result.data[2].count;
         }
     });
 
+    // ophalen van de games
     self.getGames = function () {
         DashBoardService.getGames(self.total, self.query.page, function (result) {
             if (result.statusText == 'OK') {
@@ -78,12 +68,11 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         });
     };
 
+    // enkele game ophalen en opslaan
     self.getGame = function (id) {
         DashBoardService.getGame(id, function (result) {
             if (result.statusText == 'OK') {
-                console.log(result.data);
                 self.game = result.data;
-
             }
             else {
                 $mdToast.show($mdToast.simple().textContent(result.data.message));
@@ -91,6 +80,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         });
     };
 
+    //starten van een game
     self.startGame = function (gameId) {
         DashBoardService.startGame(gameId, function (result) {
             if (result.statusText == 'OK') {
@@ -103,8 +93,8 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         })
     };
 
+    // deelname aan een game aanvragen
     self.joinGame = function (id) {
-        console.log(id);
         DashBoardService.joinGame(id, function (result) {
             if (result.statusText == 'OK') {
                 $mdToast.show($mdToast.simple().textContent('Joined game!'));
@@ -118,6 +108,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         });
     };
 
+    // een game spelen
     self.playGame = function (gameId) {
         DashBoardService.getGame(gameId, function (result) {
             if (result.statusText == 'OK') {
@@ -130,6 +121,7 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         })
     };
 
+    // een game bekijken
     self.spectateGame = function (gameId) {
         DashBoardService.getGame(gameId, function (result) {
             if (result.statusText == 'OK') {
@@ -142,7 +134,8 @@ module.exports = function (DashBoardService, $mdToast, $state, Socket, $rootScop
         })
     };
 
-    self.playerExists = function (game, username) {
+    // kijken of een speler bestaat
+    self.playerInGame = function (game, username) {
         for (var i = 0; i < game.players.length; i++) {
             if (game.players[i]._id == username)
                 return true;

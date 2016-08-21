@@ -11,7 +11,6 @@ module.exports = function ($http, APIService) {
 
     service.setCredentials = function (id) {
         api.id = id;
-        console.log(api.id);
     };
 
     service.setGameSettings = function (template, minPlayers, maxPlayers) {
@@ -20,14 +19,6 @@ module.exports = function ($http, APIService) {
         game.maxPlayers = maxPlayers;
     };
 
-    /**
-     * pageSize: games on a page
-     * pageIndex: which page to go
-     * createdBy: filter game on name creater
-     * player: filter player in game
-     * gameTemplate: filter game template
-     * state: game state filter
-     */
     service.getGames = function (pageSize, pageIndex, callback) {
         $http.get(APIService.games() + '?pageSize=' + pageSize + '&pageIndex=' + pageIndex)
             .then(function (response) {

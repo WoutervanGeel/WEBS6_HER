@@ -24,7 +24,6 @@ app.service('AuthenticationService', require('./auth/auth.service.js'));
 app.service('DashBoardService', require('./dashboard/dashboard.service.js'));
 app.service('GameService', require('./game/game.service.js'));
 app.service('SettingsService', require('./settings/settings.service.js'));
-app.service('TileService', require('./game/tile.service.js'));
 
 // FACTORIES
 app.factory('HttpRequestInterceptor', require('./util/requestinterceptor.factory.js'));

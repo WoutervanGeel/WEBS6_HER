@@ -1,0 +1,21 @@
+$borderColor: #333;
+$hoverColor: #1e88e5;
+
+.tile {
+  display: block;
+  margin: 5px;
+  position: relative;
+  border: solid 1px $borderColor;
+  box-sizing: border-box;
+  outline: none;
+
+  &.boardItem {
+
+    position: absolute;
+    margin:0;
+
+    &:hover {
+      border-color: $hoverColor;
+    }
+  }
+}
